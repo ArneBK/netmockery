@@ -20,14 +20,15 @@ namespace netmockery
         private const string BOOL_SWITCH_NOTESTMODE = "--notestmode";
         private const string BOOL_SWITCH_STOP = "--stop";
         private const string BOOL_SWITCH_DIFF = "--diff";
+        private const string BOOL_SWITCH_LIST = "--list";
 
         static private string[] VALUE_SWITCHES = new[] { VALUE_SWITCH_URL, VALUE_SWITCH_ONLY };
-        static private string[] BOOL_SWITCHES = new[] { BOOL_SWITCH_SHOWRESPONSE, BOOL_SWITCH_NOTESTMODE, BOOL_SWITCH_STOP, BOOL_SWITCH_DIFF };
+        static private string[] BOOL_SWITCHES = new[] { BOOL_SWITCH_SHOWRESPONSE, BOOL_SWITCH_NOTESTMODE, BOOL_SWITCH_STOP, BOOL_SWITCH_DIFF, BOOL_SWITCH_LIST };
 
         static private Dictionary<int, string[]> VALID_SWITHCES_BY_COMMAND = new Dictionary<int, string[]> {
             { COMMAND_NORMAL, new[] { VALUE_SWITCH_URL, BOOL_SWITCH_NOTESTMODE } },
             { COMMAND_SERVICE, new[] { VALUE_SWITCH_URL } },
-            { COMMAND_TEST, new[] { VALUE_SWITCH_URL, VALUE_SWITCH_ONLY, BOOL_SWITCH_SHOWRESPONSE, BOOL_SWITCH_STOP, BOOL_SWITCH_DIFF} },
+            { COMMAND_TEST, new[] { VALUE_SWITCH_URL, VALUE_SWITCH_ONLY, BOOL_SWITCH_SHOWRESPONSE, BOOL_SWITCH_STOP, BOOL_SWITCH_DIFF, BOOL_SWITCH_LIST} },
             { COMMAND_DUMP, new string[0] }
         };
 
@@ -135,7 +136,8 @@ namespace netmockery
                 ShowResponse = boolValues[BOOL_SWITCH_SHOWRESPONSE],
                 NoTestMode = boolValues[BOOL_SWITCH_NOTESTMODE],
                 Stop = boolValues[BOOL_SWITCH_STOP],
-                Diff = boolValues[BOOL_SWITCH_DIFF]
+                Diff = boolValues[BOOL_SWITCH_DIFF],
+                List = boolValues[BOOL_SWITCH_LIST]
             };
         }
     }
@@ -161,6 +163,7 @@ namespace netmockery
         public bool NoTestMode;
         public bool Stop;
         public bool Diff;
+        public bool List;
 
         public bool TestMode => !NoTestMode;
     }

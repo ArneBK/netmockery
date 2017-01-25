@@ -173,6 +173,10 @@ namespace netmockery
                     }
                 }
             }
+            else if (commandArgs.List)
+            {
+                testRunner.ListAllTestNames();
+            }
             else
             {
                 testRunner.TestAll(commandArgs.Stop, true);

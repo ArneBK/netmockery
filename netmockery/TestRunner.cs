@@ -78,6 +78,16 @@ namespace netmockery
             }
         }
 
+        public void ListAllTestNames()
+        {
+            var index = 0;
+            foreach (var test in testcases)
+            {
+                WriteBeginTest(index++, test);
+                WriteLine("");
+            }
+        }
+
         public void WriteCoverage()
         {
             var ci = GetCoverageInfo();
