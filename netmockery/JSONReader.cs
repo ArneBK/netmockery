@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Net;
 
 namespace netmockery
 {
@@ -92,6 +93,7 @@ namespace netmockery
         //TODO: contenttype should be renamed to mediatype
         public string contenttype;
         public string charset;
+        public string httpStatusCode;
         public JSONReplacement[] replacements;
         public int delay;
 
@@ -171,6 +173,11 @@ namespace netmockery
                 if (charset != null)
                 {
                     simpleResponseCreator.Encoding = Encoding.GetEncoding(charset);
+                }
+                HttpStatusCode statusCode;
+                if (Enum.TryParse(httpStatusCode, out statusCode))
+                {
+                    simpleResponseCreator.HttpStatusCode = statusCode;
                 }
             }
 

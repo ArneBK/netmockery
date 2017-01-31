@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net.Http;
+using System.Net;
 
 namespace netmockery
 {
@@ -35,6 +36,7 @@ namespace netmockery
         string writtenContent;
         Encoding writtenEncoding;
         string contentType;
+        int statusCode;
         bool writeAsyncCalled = false;
 
         public Stream Body => memoryStream;
@@ -44,6 +46,14 @@ namespace netmockery
             set
             {
                 contentType = value;
+            }
+        }
+
+        public HttpStatusCode HttpStatusCode
+        {
+            set
+            {
+                statusCode = (int)value;
             }
         }
 

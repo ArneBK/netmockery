@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using netmockery;
 using Xunit;
+using System.Net;
 
 namespace UnitTests
 {
@@ -60,9 +61,24 @@ namespace UnitTests
                 }
             };
 
+            var jsonEndpoint3 = new JSONEndpoint
+            {
+                name = "lorem",
+                pathregex = "ipsum",
+                responses = new[] {
+                    new JSONResponse {
+                        match = new JSONRequestMatcher(),
+                        file = "myfile.xml",
+                        contenttype = "text/xml",
+                        httpStatusCode = "200"
+                    }
+                }
+            };
+
             directoryCreator.AddFile("defaults.json", JsonConvert.SerializeObject(new JSONDefaults { charset = "ascii", contenttype = "application/xml" }));
             directoryCreator.AddFile("endpoint1\\endpoint.json", JsonConvert.SerializeObject(jsonEndpoint1));
             directoryCreator.AddFile("endpoint2\\endpoint.json", JsonConvert.SerializeObject(jsonEndpoint2));
+            directoryCreator.AddFile("endpoint3\\endpoint.json", JsonConvert.SerializeObject(jsonEndpoint3));
 
             endpointCollection = EndpointCollectionReader.ReadFromDirectory(directoryCreator.DirectoryName);
         }
@@ -148,6 +164,15 @@ namespace UnitTests
 
             var responseCreator = endpointCollection.Get("foobar").Responses.Single().Item2 as SimpleResponseCreator;
             Assert.Equal("utf-8", responseCreator.Encoding.WebName);
+        }
+
+        [Fact]
+        public void ValidateDefaultHttpResponseCode()
+        {
+            InitializeEndpointCollectionWithGlobalDefaultsOnly();
+
+            var responseCreator = endpointCollection.Get("lorem").Responses.Single().Item2 as SimpleResponseCreator;
+            Assert.Equal(HttpStatusCode.OK, responseCreator.HttpStatusCode);
         }
     }
 }

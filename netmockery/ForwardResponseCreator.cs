@@ -68,6 +68,7 @@ namespace netmockery
             var responseMessage = await httpClient.SendAsync(httpMsg);
 
             response.ContentType = responseMessage.Content.Headers.ContentType.ToString();
+            response.HttpStatusCode = responseMessage.StatusCode;
             var responseBodyStream = await responseMessage.Content.ReadAsStreamAsync();
             var memoryStream = new MemoryStream();
             responseBodyStream.CopyTo(memoryStream);
